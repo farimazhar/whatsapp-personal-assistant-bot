@@ -8,11 +8,15 @@ const client = new Client({
     puppeteer: { headless: true, args: ['--no-sandbox'] }
 });
 
-client.on('qr', qr => qrcode.generate(qr, {small: true}));
+client.on('qr', qr => {
+    qrcode.generate(qr, {small: true});
+    console.log('QR Ready, scan karo!');
+});
+
 client.on('ready', () => {
     console.log('✅ Bot Ready!');
     
-    // Scheduled messages lagao config se
+    // Scheduled messages
     config.scheduledMessages.forEach(job => {
         cron.schedule(job.time, () => {
             client.sendMessage(job.number, job.message);
@@ -21,17 +25,15 @@ client.on('ready', () => {
     });
 });
 
+// Auto-reply jab koi message bheje
 client.on('message', async msg => {
-    if(msg.fromMe || !config.autoReplyEnabled) return;
-
-    const text = msg.body.toLowerCase();
-    const hasBusyKeyword = config.autoReplies.busyKeywords.some(k => text.includes(k));
-
-    if(hasBusyKeyword){
-        await msg.reply(config.autoReplies.busyReply);
-    } else {
-        await msg.reply(config.autoReplies.default);
-    }
+    if (msg.from.includes('@g.us')) return; // group ignore
+    if (msg.fromMe) return;
+    
+    // Thori dair baad reply
+    setTimeout(() => {
+        msg.reply(config.autoReplyMessage);
+    }, 2000);
 });
 
 client.initialize();
