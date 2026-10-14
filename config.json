@@ -1,0 +1,15 @@
+{
+  "autoReplyEnabled": true,
+  "autoReplies": {
+    "default": "Salam! Abhi busy hun, thori dair mein reply karti hun - Fari ✨",
+    "busyKeywords": ["urgent", "call", "kahan ho"],
+    "busyReply": "Abhi class/meeting mein hun, 1 ghante mein free ho kar call karti hun!"
+  },
+  "scheduledMessages": [
+    {
+      "number": "92300XXXXXXX@c.us",
+      "message": "Happy Birthday! 🎂",
+      "time": "00 00 12 * * *"
+    }
+  ]
+}
