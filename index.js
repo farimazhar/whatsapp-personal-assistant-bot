@@ -15,22 +15,17 @@ client.on('qr', qr => {
 
 client.on('ready', () => {
     console.log('✅ Bot Ready!');
-    
-    // Scheduled messages
     config.scheduledMessages.forEach(job => {
         cron.schedule(job.time, () => {
             client.sendMessage(job.number, job.message);
-            console.log(`Scheduled message sent to ${job.number}`);
+            console.log(`Sent to ${job.number}`);
         });
     });
 });
 
-// Auto-reply jab koi message bheje
 client.on('message', async msg => {
-    if (msg.from.includes('@g.us')) return; // group ignore
+    if (msg.from.includes('@g.us')) return;
     if (msg.fromMe) return;
-    
-    // Thori dair baad reply
     setTimeout(() => {
         msg.reply(config.autoReplyMessage);
     }, 2000);
